@@ -9,9 +9,9 @@ type ContactsRepositoryInDB struct {
 	db *sql.DB
 }
 
-func NewContactRepositoryInDB(db *sql.DB) *ContactsRepositoryInDB{
+func NewContactRepositoryInDB(db *sql.DB) *ContactsRepositoryInDB {
 	return &ContactsRepositoryInDB{
-		db : db,
+		db: db,
 	}
 }
 
@@ -26,8 +26,8 @@ func (r *ContactsRepositoryInDB) Save(contact model.Contact) (model.Contact, err
 
 func (r *ContactsRepositoryInDB) ListAll() (contact []model.Contact, err error) {
 	rows, err := r.db.Query("select id, firstname,lastname,phone,email from contact")
-	if err!= nil{
-		return nil,err
+	if err != nil {
+		return nil, err
 	}
 	for rows.Next() {
 		p := model.Contact{}
@@ -43,7 +43,7 @@ func (r *ContactsRepositoryInDB) ListAll() (contact []model.Contact, err error) 
 func (r *ContactsRepositoryInDB) GetByID(id uint) (p model.Contact, err error) {
 	row := r.db.QueryRow("select id, firstname,lastname,phone,email from contact where id = $1", id)
 	err = row.Scan(&p.ID, &p.FirstName, &p.LastName, &p.Phone, &p.Email)
-	if err != nil{
+	if err != nil {
 		return model.Contact{}, err
 	}
 	return p, nil
@@ -52,25 +52,25 @@ func (r *ContactsRepositoryInDB) GetByID(id uint) (p model.Contact, err error) {
 func (r *ContactsRepositoryInDB) GetByPhone(phone string) (p model.Contact, err error) {
 	row := r.db.QueryRow("select id, firstname,lastname,phone,email from contact where phone = $1", phone)
 	err = row.Scan(&p.ID, &p.FirstName, &p.LastName, &p.Phone, &p.Email)
-	if err != nil{
+	if err != nil {
 		return model.Contact{}, err
 	}
 	return p, nil
 }
 
-func (r *ContactsRepositoryInDB) GetByEmail(email string) (p model.Contact,err error) {
+func (r *ContactsRepositoryInDB) GetByEmail(email string) (p model.Contact, err error) {
 	row := r.db.QueryRow("select id, firstname,lastname,phone,email from contact where email = $1", email)
 	err = row.Scan(&p.ID, &p.FirstName, &p.LastName, &p.Phone, &p.Email)
-	if err != nil{
+	if err != nil {
 		return model.Contact{}, err
 	}
 	return p, nil
 }
 
-func (r *ContactsRepositoryInDB) SearchByName(n string) (contact []model.Contact,err error) {
+func (r *ContactsRepositoryInDB) SearchByName(n string) (contact []model.Contact, err error) {
 	row, err := r.db.Query("select id, firstname,lastname,phone,email from contact where firstname = $1", n)
-	if err!= nil{
-		return nil,err
+	if err != nil {
+		return nil, err
 	}
 	for row.Next() {
 		p := model.Contact{}
@@ -85,9 +85,8 @@ func (r *ContactsRepositoryInDB) SearchByName(n string) (contact []model.Contact
 
 func (r *ContactsRepositoryInDB) Delete(id uint) error {
 	_, err := r.db.Exec("delete from contact where id = $1", id)
-	if err != nil{
+	if err != nil {
 		return err
 	}
 	return nil
 }
-

@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/ssashavor/homework_8/pkg/database"
 	"github.com/ssashavor/homework_8/pkg/model"
 	repository "github.com/ssashavor/homework_8/pkg/repository/db"
 	"log"
-	"github.com/ssashavor/homework_8/pkg/database"
 )
 
 const (
@@ -156,7 +156,7 @@ func Delete(rep model.ContactsRepository) error {
 func Save(rep model.ContactsRepository) error {
 	contact := model.Contact{
 		FirstName: readString("Please enter an 'FirstName' field and press Enter"),
-		LastName: readString("Please enter an 'LastName' field and press Enter"),
+		LastName:  readString("Please enter an 'LastName' field and press Enter"),
 
 		Phone: readString("Please enter an 'Phone' field and press Enter"),
 		Email: readString("Please enter an 'Email' field and press Enter"),
