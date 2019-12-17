@@ -68,7 +68,7 @@ func (r *ContactsRepositoryInDB) GetByEmail(email string) (p model.Contact, err 
 }
 
 func (r *ContactsRepositoryInDB) SearchByName(n string) (contact []model.Contact, err error) {
-	row, err := r.db.Query("select id, firstname,lastname,phone,email from contact where firstname = $1", n)
+	row, err := r.db.Query("select id, firstname,lastname,phone,email from contact where firstname like $1 or lastname like $1", n)
 	if err != nil {
 		return nil, err
 	}
